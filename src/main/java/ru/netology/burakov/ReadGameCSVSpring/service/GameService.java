@@ -27,6 +27,20 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
+    public String getNameOfMostPopularGame(String platform){
+        List<Game> gameList = gameRepository.getGameByPlatform(platform);
+
+        String name = null;
+        float maxPurchase = 0;
+        for (Game game: gameList){
+            if(game.getGlobalSales() > maxPurchase){
+                maxPurchase = game.getGlobalSales();
+                name = game.getName();
+            }
+        }
+        return name;
+    }
+
     // данный метод потребовлся для обработки строк, где год N/A
     private int parseIntWithNA(String value) {
         return "N/A".equals(value) ? 0 : Integer.parseInt(value);
